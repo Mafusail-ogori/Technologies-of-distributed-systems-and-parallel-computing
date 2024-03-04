@@ -16,8 +16,6 @@ import { TimeResult } from "../models/TimeResult";
 import { useSelector } from "react-redux";
 import { ChartFlow } from "./ChartFlow";
 import classes from "./InputForm.module.css";
-
-import jsPDF from "jspdf";
 import { generatePdf } from "../utils/generatePdf";
 
 export const InputForm = () => {
@@ -32,6 +30,10 @@ export const InputForm = () => {
 
   const timeResults: TimeResult[] = useSelector(
     (state: RootState) => state.numbers.timeResults
+  );
+
+  const sortedArray: number[] = useSelector(
+    (state: RootState) => state.numbers.numbers
   );
 
   const scenarioClickHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +82,7 @@ export const InputForm = () => {
   };
 
   const exportToPDFButtonClickHandler = () => {
-    generatePdf(timeResults);
+    generatePdf(timeResults, sortedArray);
   };
 
   return (

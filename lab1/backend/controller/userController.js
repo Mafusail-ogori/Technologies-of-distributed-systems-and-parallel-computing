@@ -1,6 +1,5 @@
 import generator from "../utils/randomGenerator.js";
 import { timeResults } from "../utils/timeResults.js";
-import { fileContentGetter } from "../utils/fileContentGetter.js";
 
 class UserController {
   async calculateUserManual(req, res) {
@@ -17,6 +16,7 @@ class UserController {
           eightThreadResult,
           sixteenThreadResult,
         ],
+        sortedArray: sixteenThreadResult.sortedNumbers,
       });
     } catch (error) {
       console.log(error);
@@ -38,6 +38,7 @@ class UserController {
           eightThreadResult,
           sixteenThreadResult,
         ],
+        sortedArray: sixteenThreadResult.sortedNumbers,
       });
     } catch (error) {
       console.log(error);
@@ -59,6 +60,7 @@ class UserController {
           eightThreadResult,
           sixteenThreadResult,
         ],
+        sortedArray: sixteenThreadResult.sortedNumbers,
       });
       res.status(200);
     } catch (error) {

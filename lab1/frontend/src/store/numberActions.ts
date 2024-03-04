@@ -5,7 +5,7 @@ import { numberActions } from "./numberSlice";
 
 export const sendNumbersData = (numbers: number[]) => {
   return async (dispatch: AppDispatch) => {
-    const sendData = async () => {
+    const sendNumbers = async () => {
       try {
         const response = await axios.post(
           `http://localhost:8080/user/manual`,
@@ -16,23 +16,30 @@ export const sendNumbersData = (numbers: number[]) => {
             },
           }
         );
-        return response.data.timeResults;
+        return {
+          timeResults: response.data.timeResults,
+          numbers: response.data.sortedArray,
+        };
       } catch (error) {
         throw new Error(`Error sending numbers data ${error}`);
       }
     };
     try {
-      const response: TimeResult[] = await sendData();
+      const result = await sendNumbers();
+      const timeResults: TimeResult[] = result.timeResults;
+      const sortedArray: number[] = result.numbers;
+
       dispatch(
         numberActions.setStatus({
-          status: response ? true : false,
+          status: timeResults ? true : false,
         })
       );
       dispatch(
         numberActions.setResultTime({
-          timeResults: response,
+          timeResults: timeResults,
         })
       );
+      dispatch(numberActions.setNumbers({ numbers: sortedArray }));
     } catch (error) {
       throw new Error(`Sending numbers error ${error}`);
     }
@@ -52,23 +59,30 @@ export const sendAmountData = (amount: number) => {
             },
           }
         );
-        return response.data.timeResults;
+        return {
+          timeResults: response.data.timeResults,
+          numbers: response.data.sortedArray,
+        };
       } catch (error) {
         throw new Error(`Error sending amount data ${error}`);
       }
     };
     try {
-      const response: TimeResult[] = await sendAmount();
+      const result = await sendAmount();
+      const timeResults: TimeResult[] = result.timeResults;
+      const sortedArray: number[] = result.numbers;
+
       dispatch(
         numberActions.setStatus({
-          status: response ? true : false,
+          status: timeResults ? true : false,
         })
       );
       dispatch(
         numberActions.setResultTime({
-          timeResults: response,
+          timeResults: timeResults,
         })
       );
+      dispatch(numberActions.setNumbers({ numbers: sortedArray }));
     } catch (error) {
       throw new Error(`Sending amount error ${error}`);
     }
@@ -85,23 +99,30 @@ export const sendFileData = (file: any) => {
           `http://localhost:8080/user/file`,
           formData
         );
-        return response.data.timeResults;
+        return {
+          timeResults: response.data.timeResults,
+          numbers: response.data.sortedArray,
+        };
       } catch (error) {
         throw new Error(`Error sending file data ${error}`);
       }
     };
     try {
-      const response: TimeResult[] = await sendFile();
+      const result = await sendFile();
+      const timeResults: TimeResult[] = result.timeResults;
+      const sortedArray: number[] = result.numbers;
+
       dispatch(
         numberActions.setStatus({
-          status: response ? true : false,
+          status: timeResults ? true : false,
         })
       );
       dispatch(
         numberActions.setResultTime({
-          timeResults: response,
+          timeResults: timeResults,
         })
       );
+      dispatch(numberActions.setNumbers({ numbers: sortedArray }));
     } catch (error) {
       throw new Error(`Sending file error ${error}`);
     }

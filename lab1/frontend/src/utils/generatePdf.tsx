@@ -1,7 +1,11 @@
 import { TimeResult } from "../models/TimeResult";
 import jsPDF from "jspdf";
 
-export const generatePdf = (timeResults: TimeResult[]) => {
+export const generatePdf = (
+  timeResults: TimeResult[],
+  sortedArray: number[]
+) => {
+  const textOptions = { maxWidth: 180 };
   const doc = new jsPDF();
   doc.text(
     `${timeResults.map(
@@ -11,5 +15,6 @@ export const generatePdf = (timeResults: TimeResult[]) => {
     10,
     10
   );
+  doc.text(sortedArray.toString(), 10, 50, textOptions);
   doc.save("multithreading.pdf");
 };
